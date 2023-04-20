@@ -1,0 +1,56 @@
+service: bootcamp-sample
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-southeast-1
+  stage: dev
+  httpApi:
+    cors: true
+
+plugins:
+  - serverless-offline
+
+functions:
+  insertCompany:
+    handler: index.insertCompany
+    events:
+      - httpApi:
+          path: /companies
+          method: post
+
+  getAllCompanies:
+    handler: index.getAllCompanies
+    events:
+      - httpApi:
+          path: /companies
+          method: get
+  
+  getCompanyById:
+    handler: index.getCompanyById
+    events:
+      - httpApi:
+          path: /companies/{company_id}
+          method: get
+
+  updateCompanyById:
+    handler: index.updateCompanyById
+    events:
+      - httpApi:
+          path: /companies/{company_id}
+          method: patch
+
+  deleteCompanyById:
+    handler: index.deleteCompanyById
+    events:
+      - httpApi:
+          path: /companies/{company_id}
+          method: delete
+
+  archiveCompanyById:
+    handler: index.archiveCompanyById
+    events:
+      - httpApi:
+          path: /companies/archive/{company_id}
+          method: delete
